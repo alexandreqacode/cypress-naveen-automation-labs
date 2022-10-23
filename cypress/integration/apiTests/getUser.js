@@ -19,7 +19,7 @@ describe('Get api user tests', ()=>{
         })
     })
 
-    it('get user by ID and check its name', ()=>{
+    it.skip('get user by ID and check its name', ()=>{
 
         cy.request({
 
