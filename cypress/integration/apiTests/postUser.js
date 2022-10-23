@@ -40,6 +40,26 @@ describe('Post user request', () => {
                 expect(response.body.email).to.eq(testEmail)
                 expect(response.body.status).to.eq(payload.status)
 
+            }).then((response) => {
+                const userId = response.body.id
+                cy.log('user ID is ' + userId)
+
+                cy.request({
+
+                    method: 'GET',
+                    url: 'https://gorest.co.in/public/v2/users/' + userId,
+                    headers: {
+                        
+                        'Authorization': 'Bearer ' + accessToken
+                    
+                    }
+                }).then((response)=>{
+                    expect(response.status).to.eq(200)
+                    expect(response.body).has.property('id', userId)
+                    expect(response.body).has.property('name', payload.name)
+                    expect(response.body.status).to.eq(payload.status)
+                    expect(response.body.email).to.eq(testEmail)
+                })
             })
         })
     })
